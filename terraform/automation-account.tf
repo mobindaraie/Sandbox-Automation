@@ -55,3 +55,19 @@ resource "azurerm_role_assignment" "role_assignment_cancelled" {
   role_definition_name = azurerm_role_definition.sandbox-automation-account-cancelled.name
   principal_id         = azurerm_automation_account.automation_account.identity[0].principal_id
 }
+
+# main Sandbox Runbook
+resource "azurerm_automation_runbook" "example" {
+  name                    = "${var.resource-prefix}-ac-lifecycle-runbook"
+  location                = azurerm_automation_account.automation_account.location
+  resource_group_name     = azurerm_resource_group.resource_group.name
+  automation_account_name = azurerm_automation_account.automation_account.name
+  log_verbose             = "true"
+  log_progress            = "true"
+  description             = "Run book which identifies the expired sandbox subscriptions, removes the privileged roles on the subs, cancels the subscription and move them to cancelled to management group"
+  runbook_type            = "PowerShell"
+
+  publish_content_link {
+    uri = "https://raw.githubusercontent.com/mobindaraie/Sandbox-Automation/main/runbooks/Sandbox-Automation.ps1"
+  }
+}
