@@ -1,0 +1,22 @@
+{
+  "properties": {
+    "roleName": "Owner_In_Sandbox",
+    "description": "",
+    "assignableScopes": [
+      "/providers/Microsoft.Management/managementGroups/...."
+    ],
+    "permissions": [
+      {
+        "actions": ["*"],
+        "notActions": [
+          "Microsoft.Resources/subscriptions/tagNames/write",
+          "Microsoft.Resources/subscriptions/tagNames/delete",
+          "Microsoft.Resources/subscriptions/tagNames/tagValues/write",
+          "Microsoft.Resources/subscriptions/tagNames/tagValues/delete"
+        ],
+        "dataActions": [],
+        "notDataActions": []
+      }
+    ]
+  }
+}
