@@ -5,7 +5,7 @@ This projects provides set of resources to help users manage lifecycles of Azure
 Following the best practices in, [Cloud Adoption Framework](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/considerations/sandbox-environments), a sandbox is an isolated environment where you can test and experiment without affecting other environments, like production, development, or user acceptance testing (UAT) environments.
 
 ## Description
-This project provides a set of resources to help users manage lifecycles of Azure sandbox subscriptions. The resources are designed to be deployed to a management subscription and can be used clean up and delete sandbox subscriptions upon expiry.
+This project provides a set of resources to help users manage lifecycles of Azure sandbox subscriptions. The resources are designed to be deployed to an enterprise-scaled zone sandbox management group. The aim of the resources is to clean up and delete sandbox subscriptions upon expiry.
 
 ## Table of Contents
 
