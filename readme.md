@@ -10,8 +10,9 @@ This project provides a set of resources to help users manage lifecycles of Azur
 ## Table of Contents
 
 - [Pre-requisites](#pre-requisites)
-- [Terraform Automation Account and Runbook Creation](#introduction)
+- [Terraform Automation Account and Runbook Creation](#resources)
 - [Usage](#usage)
+- [Automation Runbook Parameters](#runbook-customisation)
 - [Authors](#authors)
 
 ## Pre-requisites
@@ -23,7 +24,7 @@ This project provides a set of resources to help users manage lifecycles of Azur
   - Permission to create an azure automation account in the subscription.
 
 
-## Terraform Automation Account and Runbook Creation <a name="introduction"></a>
+## Terraform Automation Account and Runbook Creation <a name="resources"></a>
 
 This Terraform code creates an automation account and a runbook in Azure. The runbook is used to identify expired sandbox subscriptions, remove privileged roles on the subscriptions, cancel the subscriptions, and move them to the cancelled management group.
 
@@ -43,6 +44,23 @@ This Terraform code creates an automation account and a runbook in Azure. The ru
 - `azurerm_role_definition`: Creates a custom role definition to remove privileged roles on the sandbox subscriptions.
 - `azurerm_role_assignment`: Assigns the role definition to the automation account identity for the `sandbox` and `cancelled` management groups.
 - `azurerm_automation_runbook`: Creates a PowerShell runbook to automate the process of identifying and cancelling expired sandbox subscriptions.
+
+## Runbook Customisation
+When the runbook is created in an automation account, all required modules are installed and imported. The runbook is also published. 
+The runbook can be customised to suit your needs. For example, you can change the number of days after which a subscription is considered expired. You can also change the management group to which the subscriptions are moved after cancellation.
+
+### Automation Runbook Parameters <a name="runbook-customisation"></a>
+The runbook has the following parameters:
+- `TopSandboxManagementGroupId`: The ID of the top-level management group in the enterprise-scale landing zone. This is the management group that contains the Sandbox  management groups or Sandbox subscriptions.
+- `CancelledManagementGroupId`: The ID of the management group to which the cancelled subscriptions are moved to after subscription cancellation.
+- `ExpiryTagKey`: The key of the tag that is used to identify the expiry date of the sandbox subscriptions. The default value is `expiry`. The value of the tag is expected to be in the format `dd/MM/yyyy`.
+- `PrivilegedRoles`: A list of privileged roles that are removed from the sandbox subscriptions. The default value is `["Owner", "Contributor", "User Access Administrator"]`.
+- `ExcludedPrincipals`: A list of principals that are excluded from the privileged role removal process. The default value is
+
+    `['MS-PIM','Custom Defender for Cloud provisioning Azure Monitor agent','CloudPosture/securityOperators/efenderCSPMSecurityOperator',
+  'Azure Monitor Application','StorageAccounts/securityOperators/DefenderForStorageSecurityOperator']`.
+- `DisableSubscription`: Specifies whether to disable the subscription before moving it to the cancelled management group. The default value is $true.
+
 
 ## Authors
 
