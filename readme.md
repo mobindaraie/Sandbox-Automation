@@ -38,11 +38,10 @@ This Terraform code creates an automation account and a runbook in Azure. The ru
 6. Once the resources are created, you can view the runbook in the Azure portal.
 
 ### Resources Created
-
-- `azurerm_automation_account`: Creates an automation account with a system-assigned identity.
-- `azurerm_automation_module`: Installs the `Az.Accounts`, `Az.ResourceGraph`, and `Az.Subscription` PowerShell modules.
 - `azurerm_role_definition`: Creates a custom role definition to remove privileged roles on the sandbox subscriptions.
 - `azurerm_role_assignment`: Assigns the role definition to the automation account identity for the `sandbox` and `cancelled` management groups.
+- `azurerm_automation_account`: Creates an automation account with a system-assigned identity.
+- `azurerm_automation_module`: Installs the `Az.Accounts`, `Az.ResourceGraph`, and `Az.Subscription` PowerShell modules.
 - `azurerm_automation_runbook`: Creates a PowerShell runbook to automate the process of identifying and cancelling expired sandbox subscriptions.
 
 ## Runbook Customisation
