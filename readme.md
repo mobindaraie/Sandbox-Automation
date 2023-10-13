@@ -54,6 +54,8 @@ The runbook has the following parameters:
 - `TopSandboxManagementGroupId`: The ID of the top-level management group in the enterprise-scale landing zone. This is the management group that contains the Sandbox  management groups or Sandbox subscriptions.
 - `CancelledManagementGroupId`: The ID of the management group to which the cancelled subscriptions are moved to after subscription cancellation.
 - `ExpiryTagKey`: The key of the tag that is used to identify the expiry date of the sandbox subscriptions. The default value is `expiry`. The value of the tag is expected to be in the format `dd/MM/yyyy`.
+-`GracePeriod`: Specifies the grace period in days before cancelling the subscription. The default value is 10.
+- `AlarmPeriod`: Specifies the alarm period in days before the subscription reaches expiry date. The default value is 15.
 - `PrivilegedRoles`: A list of privileged roles that are removed from the sandbox subscriptions. The default value is `["Owner", "Contributor", "User Access Administrator"]`.
 - `ExcludedPrincipals`: A list of principals that are excluded from the privileged role removal process. The default value is
 
