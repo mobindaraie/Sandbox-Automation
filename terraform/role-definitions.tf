@@ -11,6 +11,7 @@ resource "azurerm_role_definition" "sandbox-automation-account-sandbox" {
       "Microsoft.Management/managementGroups/subscriptions/write",
       "Microsoft.Management/managementGroups/write",
       "Microsoft.Management/managementGroups/subscriptions/read",
+      "Microsoft.Management/register/action",
       "Microsoft.Authorization/*/read",
       "Microsoft.Authorization/roleAssignments/*",
       "Microsoft.Subscription/cancel/action"
@@ -35,7 +36,9 @@ resource "azurerm_role_definition" "sandbox-automation-account-decommissioned" {
       "Microsoft.Management/managementGroups/subscriptions/delete",
       "Microsoft.Management/managementGroups/subscriptions/write",
       "Microsoft.Management/managementGroups/write",
-      "Microsoft.Management/managementGroups/subscriptions/read"
+      "Microsoft.Management/managementGroups/subscriptions/read",
+      "Microsoft.Authorization/roleAssignments/*",
+      "Microsoft.Management/register/action"
     ]
     not_actions = []
   }

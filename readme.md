@@ -7,6 +7,8 @@ Following the best practices in, [Cloud Adoption Framework](https://learn.micros
 ## Description
 This project provides a set of resources to help users manage lifecycles of Azure sandbox subscriptions. The resources are designed to be deployed to an enterprise-scaled zone sandbox management group. The aim of the resources is to clean up and delete sandbox subscriptions upon expiry.
 
+<img src="./media/sandbox-landing-zone-automation-web.png" alt="Architecture" style="max-width: 65%;">
+
 ## Table of Contents
 
 - [Pre-requisites](#pre-requisites)
@@ -23,7 +25,6 @@ This project provides a set of resources to help users manage lifecycles of Azur
   - User Access Administrator or Owner role at the 'Sandbox' and 'Cancelled' management group scopes. This role is required to create role definition at the management group scope and assign the role definition to the automation account identity.
   - Permission to create an azure automation account in the subscription.
 
-
 ## Terraform Automation Account and Runbook Creation <a name="resources"></a>
 
 This Terraform code creates an automation account and a runbook in Azure. The runbook is used to identify expired sandbox subscriptions, remove privileged roles on the subscriptions, cancel the subscriptions, and move them to the cancelled management group.
@@ -31,7 +32,12 @@ This Terraform code creates an automation account and a runbook in Azure. The ru
 ### Usage
 
 1. Clone this repository to your local machine.
-2. Navigate to the 'terraform' directory containing the terraform files/
+2. Navigate to the 'terraform' directory containing the terraform files.
+3. Create a  `terraform.tfvars` file and update the values of the variables.
+    - `top_sandbox_management_group_id`: The ID of the top-level management group in the enterprise-scale landing zone. This is the management group that contains the Sandbox  management groups or Sandbox subscriptions.
+    - `cancelled_management_group_id`: The ID of the management group to which the cancelled subscriptions are moved to after subscription cancellation.
+    - `location`: The location of the resources.
+    - `runbook_uri`: The public URI of the automation runbook. Example: `https://raw.githubusercontent.com/mobindaraie/azure-sandbox-subscription-lifecycle-manager/main/automation/runbook.ps1`.
 3. Open the terminal and run `terraform init` to initialize the Terraform configuration.
 4. Run `terraform plan` to see the resources that will be created.
 5. Run `terraform apply` to create the resources.
