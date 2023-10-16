@@ -4,7 +4,7 @@ variable "sandbox-mg-id" {
   default = "Sandbox"
 }
 
-variable "cancelled-mg-id" {
+variable "decomissioned-mg-id" {
   type    = string
   default = "cancelled"
 }
@@ -17,4 +17,8 @@ variable "location" {
 variable "resource-prefix" {
   type    = string
   default = "sandbox-automation"
+}
+
+variable "runbook_uri" {
+  type    = string
 }

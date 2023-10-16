@@ -49,10 +49,10 @@ resource "azurerm_role_assignment" "role_assignment_sandbox" {
   principal_id         = azurerm_automation_account.automation_account.identity[0].principal_id
 }
 
-resource "azurerm_role_assignment" "role_assignment_cancelled" {
-  depends_on = [ azurerm_role_definition.sandbox-automation-account-cancelled ]
-  scope                = data.azurerm_management_group.cancelled.id
-  role_definition_name = azurerm_role_definition.sandbox-automation-account-cancelled.name
+resource "azurerm_role_assignment" "role_assignment_decomissioned" {
+  depends_on = [ azurerm_role_definition.sandbox-automation-account-decomissioned ]
+  scope                = data.azurerm_management_group.decomissioned.id
+  role_definition_name = azurerm_role_definition.sandbox-automation-account-decomissioned.name
   principal_id         = azurerm_automation_account.automation_account.identity[0].principal_id
 }
 
@@ -64,10 +64,10 @@ resource "azurerm_automation_runbook" "example" {
   automation_account_name = azurerm_automation_account.automation_account.name
   log_verbose             = "true"
   log_progress            = "true"
-  description             = "Run book which identifies the expired sandbox subscriptions, removes the privileged roles on the subs, cancels the subscription and move them to cancelled to management group"
+  description             = "Run book which identifies the expired sandbox subscriptions, removes the privileged roles on the subs, cancels the subscription and move them to decomissioned to management group"
   runbook_type            = "PowerShell"
 
   publish_content_link {
-    uri = "https://raw.githubusercontent.com/mobindaraie/Sandbox-Automation/main/runbooks/Sandbox-Automation.ps1"
+    uri = var.runbook_uri
   }
 }

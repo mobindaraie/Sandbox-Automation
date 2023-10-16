@@ -3,14 +3,14 @@
 Cancels sandbox subscriptions that have reached their expiry date.
 
 .DESCRIPTION
-The function gets a top management group and a cancelled management group and moves subscriptions 
-to the cancelled management group if they have reached their expiry date.
+The function gets a top management group and a decomissioned management group and moves subscriptions 
+to the decomissioned management group if they have reached their expiry date.
 
 .PARAMETER TopSandboxManagementGroupId
 Specifies the name of the top management group. The default value is 'Sandbox'.
 
-.PARAMETER CancelledManagementGroupId
-Specifies the name of the cancelled management group. The default value is 'cancelled'.
+.PARAMETER decomissionedManagementGroupId
+Specifies the name of the decomissioned management group. The default value is 'decomissioned'.
 
 .PARAMETER ExpiryTagKey
 Specifies the name of the tag key that contains the expiry date. The default value is 'expiry'.
@@ -28,17 +28,17 @@ Specifies an array of privileged roles that are included in role assignment remo
 Specifies an array of principals that are excluded from the privileged role removals. The default values are 'MS-PIM', 'Custom Defender for Cloud provisioning Azure Monitor agent', 'CloudPosture/securityOperators/DefenderCSPMSecurityOperator', 'Azure Monitor Application', and 'StorageAccounts/securityOperators/DefenderForStorageSecurityOperator'.
 
 .PARAMETER DisableSubscription
-Specifies whether to disable the subscription before moving it to the cancelled management group. The default value is $true.
+Specifies whether to disable the subscription before moving it to the decomissioned management group. The default value is $true.
 
 .INPUTS
 None. You can't pipe objects to this function.
 
 .OUTPUTS
-None. The function moves subscriptions to the cancelled management group if they have reached their expiry date.
+None. The function moves subscriptions to the decomissioned management group if they have reached their expiry date.
 
 .EXAMPLE
-PS> .\sandbox-automation.ps1 -TopSandboxManagementGroupId 'Sandbox' -CancelledManagementGroupId 'cancelled' -ExpiryTagKey 'expiry' -GracePeriod 10 -AlarmPeriod 15 -PrivilegedRoles @('Owner', 'Contributor', 'User Access Administrator') -ExcludedPrincipals @('MS-PIM', 'Custom Defender for Cloud provisioning Azure Monitor agent', 'CloudPosture/securityOperators/DefenderCSPMSecurityOperator', 'Azure Monitor Application', 'StorageAccounts/securityOperators/DefenderForStorageSecurityOperator') -DisableSubscription $true
-Moves subscriptions that have reached their expiry date to the 'cancelled' management group.
+PS> .\sandbox-automation.ps1 -TopSandboxManagementGroupId 'Sandbox' -decomissionedManagementGroupId 'decomissioned' -ExpiryTagKey 'expiry' -GracePeriod 10 -AlarmPeriod 15 -PrivilegedRoles @('Owner', 'Contributor', 'User Access Administrator') -ExcludedPrincipals @('MS-PIM', 'Custom Defender for Cloud provisioning Azure Monitor agent', 'CloudPosture/securityOperators/DefenderCSPMSecurityOperator', 'Azure Monitor Application', 'StorageAccounts/securityOperators/DefenderForStorageSecurityOperator') -DisableSubscription $true
+Moves subscriptions that have reached their expiry date to the 'decomissioned' management group.
 
 .LINK
 Readmore: https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/considerations/sandbox-environments
@@ -46,7 +46,7 @@ Readmore: https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready
 #>
 Param(
   [Parameter(Mandatory = $false, Position = 0)][string]$TopSandboxManagementGroupId = 'Sandbox',
-  [Parameter(Mandatory = $false, Position = 1)][string]$CancelledManagementGroupId = 'cancelled',
+  [Parameter(Mandatory = $false, Position = 1)][string]$decomissionedManagementGroupId = 'cancelled',
   [Parameter(Mandatory = $false, Position = 2)][string]$ExpiryTagKey = 'expiry',
   [Parameter(Mandatory = $false, Position = 3)][int]$GracePeriod = 10,
   [Parameter(Mandatory = $false, Position = 4)][int]$AlarmPeriod = 15,
@@ -110,13 +110,13 @@ function SubscriptionExpiryAssessment() {
       Write-Output "Error disabling subscription :$($Subscription.name)`n Error: $($_.Exception.Message)" 
     }
 
-    # Move the subscription to the cancelled management group
+    # Move the subscription to the decomissioned management group
     try {
-      New-AzManagementGroupSubscription -GroupId $CancelledManagementGroupId -SubscriptionId $Subscription.subscriptionId | Out-Null
-      Write-Output "Subscription $($Subscription.name) moved to $CancelledManagementGroupId management group" 
+      New-AzManagementGroupSubscription -GroupId $decomissionedManagementGroupId -SubscriptionId $Subscription.subscriptionId | Out-Null
+      Write-Output "Subscription $($Subscription.name) moved to $decomissionedManagementGroupId management group" 
     }
     catch {
-      Write-Output "Error moving subscription :$($Subscription.name) to management group $CancelledManagementGroupId `n Error: $($_.Exception.Message)" 
+      Write-Output "Error moving subscription :$($Subscription.name) to management group $decomissionedManagementGroupId `n Error: $($_.Exception.Message)" 
     }
   }
   else {

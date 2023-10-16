@@ -3,8 +3,8 @@ data "azurerm_management_group" "sandbox" {
   name = var.sandbox-mg-id
 }
 
-data "azurerm_management_group" "cancelled" {
-  name = var.cancelled-mg-id
+data "azurerm_management_group" "decomissioned" {
+  name = var.decomissioned-mg-id
 }
 
 # create resource group

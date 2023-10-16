@@ -1,5 +1,5 @@
 resource "azurerm_role_definition" "sandbox-automation-account-sandbox" {
-  name        = "Sandbox Automation - Sandbox MG"
+  name        = "${var.resource-prefix}-sandbox-mg-rd"
   scope       = data.azurerm_management_group.sandbox.id
   description = "Custom Least Privileged Role Definition which allows for Automation Account for Samdbox Management Group"
   permissions {
@@ -23,10 +23,10 @@ resource "azurerm_role_definition" "sandbox-automation-account-sandbox" {
 
 
 # create an azure role definition
-resource "azurerm_role_definition" "sandbox-automation-account-cancelled" {
-  name        = "Sandbox Automation - Cancelled MG"
-  scope       = data.azurerm_management_group.cancelled.id
-  description = "Custom Least Privileged Role Definition which allows for Automation Account for Cancelled Management Group"
+resource "azurerm_role_definition" "sandbox-automation-account-decomissioned" {
+  name        = "${var.resource-prefix}-decomissioned-mg-rd"
+  scope       = data.azurerm_management_group.decomissioned.id
+  description = "Custom Least Privileged Role Definition which allows for Automation Account for Decomissioned Management Group"
   permissions {
     actions = [
       "*/read",
@@ -40,12 +40,12 @@ resource "azurerm_role_definition" "sandbox-automation-account-cancelled" {
     not_actions = []
   }
   assignable_scopes = [
-    data.azurerm_management_group.cancelled.id]
+    data.azurerm_management_group.decomissioned.id]
 }
 
 # another role definition
 resource "azurerm_role_definition" "sandbox_users" {
-  name        = "Sandbox Users"
+  name        = "${var.resource-prefix}-users-rd"
   scope       = data.azurerm_management_group.sandbox.id
   description = "Privileged User role definition for Sandbox users which allow them to action everything in the subcription except delete the subscription tags"
   permissions {
