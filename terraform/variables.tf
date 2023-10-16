@@ -4,7 +4,7 @@ variable "sandbox-mg-id" {
   default = "Sandbox"
 }
 
-variable "decomissioned-mg-id" {
+variable "decommissioned-mg-id" {
   type    = string
   default = "cancelled"
 }

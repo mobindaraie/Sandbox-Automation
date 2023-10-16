@@ -23,10 +23,10 @@ resource "azurerm_role_definition" "sandbox-automation-account-sandbox" {
 
 
 # create an azure role definition
-resource "azurerm_role_definition" "sandbox-automation-account-decomissioned" {
-  name        = "${var.resource-prefix}-decomissioned-mg-rd"
-  scope       = data.azurerm_management_group.decomissioned.id
-  description = "Custom Least Privileged Role Definition which allows for Automation Account for Decomissioned Management Group"
+resource "azurerm_role_definition" "sandbox-automation-account-decommissioned" {
+  name        = "${var.resource-prefix}-decommissioned-mg-rd"
+  scope       = data.azurerm_management_group.decommissioned.id
+  description = "Custom Least Privileged Role Definition which allows for Automation Account for decommissioned Management Group"
   permissions {
     actions = [
       "*/read",
@@ -40,7 +40,7 @@ resource "azurerm_role_definition" "sandbox-automation-account-decomissioned" {
     not_actions = []
   }
   assignable_scopes = [
-    data.azurerm_management_group.decomissioned.id]
+    data.azurerm_management_group.decommissioned.id]
 }
 
 # another role definition
